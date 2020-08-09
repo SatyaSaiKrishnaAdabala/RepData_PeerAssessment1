@@ -1,35 +1,15 @@
----
-title: "PA1_template.Rmd"
-author: "Satya Sai Krishna Adabala"
-date: "8/8/2020"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-# code for reading the data
 library("ggplot2")
 setwd("C:/Users/admin/Downloads/repdata_data_activity")
 getwd()
 t <-read.csv("C:/Users/admin/Downloads/repdata_data_activity/activity.csv",header = T)
-```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r code}
-knitr::opts_chunk$set(echo = TRUE)
-# code for filtering NA`s and ploting the histogram
 t$date <- as.Date(t$date)
-#class(t$date)
+class(t$date)
 t2 <- subset(t,t$steps!= 'NA')
-#summary(t2)
+summary(t2)
+
 y <- unique(t2$date)
 x<- data.frame(date =y[1], steps =0)
-#sum(t2$steps[t2$date ==y[1]])
+sum(t2$steps[t2$date ==y[1]])
 
 for (i in 1: length(y))
 {
@@ -40,15 +20,10 @@ for (i in 1: length(y))
   x<- rbind(x,x1)
   
 }
+x
+names(x1)
 x <- x[2:nrow(x),]
 plot(x$date,x$steps,main="test",xlab="Dates",ylab="frequency",type = "h",lwd=4)
-
-```
-
-
-
-```{r code to find mean and median for a day and average steps per interval}
-knitr::opts_chunk$set(echo = TRUE)
 y1 <-data.frame(date =y[1], mean_steps =0,median_steps=0)
 for (i in 1: length(y))
 {
@@ -62,6 +37,8 @@ for (i in 1: length(y))
 }
 y1 <- y1[2:nrow(y1),]
 y1
+head(t2,6)
+
 z <- unique(t2$interval)
 y2 <- data.frame(interval=0,average_steps=0)
 for (i in 1: length(z))
@@ -78,23 +55,16 @@ for (i in 1: length(z))
 y2 <- y2[2:nrow(y2),]
 
 plot(y2$interval,y2$average_steps,type="l",xlab="Time Seriesinterval of 5 minutes", ylab= "Average Steps")
-
-```
-
-```{r code to find the number of NA`s and imputing NA values}
-knitr::opts_chunk$set(echo = TRUE)
+max(y2$average_steps)
+y2$interval[y2$average_steps ==max(y2$average_steps)]
 c <- which(is.na(t$steps))
 length(c)
 t$steps[is.na(t$steps) == TRUE] <- y2$average_steps[y2$interval == 5]
-````
-
-````{r code to plot histogram after imputing the NA`s for number of steps per day and to calculate meand and median}
-knitr::opts_chunk$set(echo = TRUE)
 # including NA`s 
 ## Histogram to show number of steps per day`
 y <- unique(t$date)
 x<- data.frame(date =y[1], steps =0)
-#sum(t$steps[t$date ==y[1]])
+sum(t$steps[t$date ==y[1]])
 
 for (i in 1: length(y))
 {
@@ -105,11 +75,11 @@ for (i in 1: length(y))
   x<- rbind(x,x1)
   
 }
-#x
-#names(x1)
+x
+names(x1)
 x <- x[2:nrow(x),]
 x$steps <- ceiling(x$steps)
-#x$steps
+x$steps
 plot(x$date,x$steps,main="test",xlab="Dates",ylab="frequency",type = "h",lwd=4)
 
 y3 <-data.frame(date =y[1], mean_steps =0,median_steps=0)
@@ -124,9 +94,7 @@ for (i in 1: length(y))
   
 }
 y3 <- y3[2:nrow(y3),]
-```
-```{r code for calculating the time series with average steps for weekdays and weekends}
-knitr::opts_chunk$set(echo = TRUE)
+
 t3 <- subset(t,weekdays(t$date) == c("Sunday","Saturday"))
 t4 <- subset(t,weekdays(t$date) != c("Sunday","Saturday"))
 
@@ -167,4 +135,7 @@ par(mfrow=c(2,1),mar =c(4,4,2,1))
 plot(y4$interval,y4$average_steps,type="l",xlab="Time Series interval of 5 minutes", ylab= "Average Steps Weekends",main="Weekends")
 
 plot(y2$interval,y2$average_steps,type="l",xlab="Time Series interval of 5 minutes", ylab= "Average Steps Weekdays",main ="Weekdays")
-```
+
+
+
+
