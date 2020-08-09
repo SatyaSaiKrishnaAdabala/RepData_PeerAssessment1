@@ -23,22 +23,9 @@ for (i in 1: length(y))
 x
 names(x1)
 x <- x[2:nrow(x),]
-plot(x$date,x$steps,main="test",xlab="Dates",ylab="frequency",type = "h",lwd=4)
-y1 <-data.frame(date =y[1], mean_steps =0,median_steps=0)
-for (i in 1: length(y))
-{
-  
-  x1 <- data.frame(date <- unique(t2$date[t2$date == y[i]]),
-                   mean_steps <- mean(t2$steps[t2$date == y[i]]),
-                   median_steps <- median(t2$steps[t2$date == y[i]]))
-  names(x1) <- c("date","mean_steps","median_steps")
-  y1<- rbind(y1,x1)
-  
-}
-y1 <- y1[2:nrow(y1),]
-y1
-head(t2,6)
-
+plot(x$date,x$steps,xlab="Dates",ylab="frequency",type = "h",lwd=4,main="Histogram of steps vs each date")
+mean(x$steps)
+median(x$steps)
 z <- unique(t2$interval)
 y2 <- data.frame(interval=0,average_steps=0)
 for (i in 1: length(z))
@@ -54,8 +41,8 @@ for (i in 1: length(z))
 
 y2 <- y2[2:nrow(y2),]
 
-plot(y2$interval,y2$average_steps,type="l",xlab="Time Seriesinterval of 5 minutes", ylab= "Average Steps")
-max(y2$average_steps)
+plot(y2$interval,y2$average_steps,type="l",xlab="Time Seriesinterval of 5 minutes", ylab= "Average Steps",main="Average steps per interval")
+#max(y2$average_steps)
 y2$interval[y2$average_steps ==max(y2$average_steps)]
 c <- which(is.na(t$steps))
 length(c)
@@ -80,20 +67,10 @@ names(x1)
 x <- x[2:nrow(x),]
 x$steps <- ceiling(x$steps)
 x$steps
-plot(x$date,x$steps,main="test",xlab="Dates",ylab="frequency",type = "h",lwd=4)
+plot(x$date,x$steps,main="Histogram of steps vs each date",xlab="Dates",ylab="frequency",type = "h",lwd=4)
 
-y3 <-data.frame(date =y[1], mean_steps =0,median_steps=0)
-for (i in 1: length(y))
-{
-  
-  x1 <- data.frame(date <- unique(t$date[t$date == y[i]]),
-                   mean_steps <- mean(t$steps[t$date == y[i]]),
-                   median_steps <- median(t$steps[t$date == y[i]]))
-  names(x1) <- c("date","mean_steps","median_steps")
-  y3<- rbind(y3,x1)
-  
-}
-y3 <- y3[2:nrow(y3),]
+mean(x$steps)
+median(x$steps)
 
 t3 <- subset(t,weekdays(t$date) == c("Sunday","Saturday"))
 t4 <- subset(t,weekdays(t$date) != c("Sunday","Saturday"))
